@@ -1,12 +1,16 @@
 import requests
 
 if __name__ == '__main__':
-    url = 'https://www.google.com.mx/'
-    response = requests.get(url)
+    
+    # Dentro del atributo args del contenido de la respuesta se encuentran los parámetros enviados en la petición GET.
+    # La siguiente es una forma no tan eficiente de enviar parámetros en una petición:
+    # url = 'https://httpbin.org/get?nombre=felipe&curso=python'
+    
+    # Resulta más óptimo enviarlos a través de un diccionario, como se muestra a continuación:
+    url = 'https://httpbin.org/get'
+    args = {'nombre': 'felipe', 'curso': 'python', 'nivel': 'intermedio'}
+    response = requests.get(url, params=args)
     
     if response.status_code == 200:
-        # En este caso, si la petición fue exitosa, guardamos el contenido de la página en un archivo.
         content = response.content
-        file = open('google.html', 'wb')
-        file.write(content)
-        file.close()
+        print(content)
