@@ -1,4 +1,5 @@
 import requests
+import json
 
 if __name__ == '__main__':
     
@@ -12,5 +13,14 @@ if __name__ == '__main__':
     response = requests.get(url, params=args)
     
     if response.status_code == 200:
-        content = response.content
-        print(content)
+        # Cuando realizamos peticiones al servidor puede ser necesario acceder a los datos de la respuesta en formato JSON.
+        '''
+        response_json = response.json() # Diccionario.
+        origin = response_json['origin']
+        print(origin)
+        '''
+        
+        # Otra forma de acceder a los datos de la respuesta en formato JSON es a través de la librería json.
+        response_json = json.loads(response.text)
+        origin = response_json['origin']
+        print(origin)
