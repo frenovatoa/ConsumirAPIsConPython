@@ -3,24 +3,19 @@ import json
 
 if __name__ == '__main__':
     
-    # Dentro del atributo args del contenido de la respuesta se encuentran los parámetros enviados en la petición GET.
-    # La siguiente es una forma no tan eficiente de enviar parámetros en una petición:
-    # url = 'https://httpbin.org/get?nombre=felipe&curso=python'
+    # Con el método post se crea un recurso en el servidor.
+    # En el atributo data se envía la información que se quiere almacenar en el servidor.
+    url = 'https://httpbin.org/post'
+    payload = {'nombre': 'felipe', 'curso': 'python', 'nivel': 'intermedio'}
     
-    # Resulta más óptimo enviarlos a través de un diccionario, como se muestra a continuación:
-    url = 'https://httpbin.org/get'
-    args = {'nombre': 'felipe', 'curso': 'python', 'nivel': 'intermedio'}
-    response = requests.get(url, params=args)
+    # response = requests.post(url, json=payload)
+    response = requests.post(url, data=json.dumps(payload))
+    
+    '''
+    - json: POST se encarga de serializar el diccionario en un formato JSON.
+    - data: Nosotros debemos serializar los datos.
+    '''
+    print(response.url)
     
     if response.status_code == 200:
-        # Cuando realizamos peticiones al servidor puede ser necesario acceder a los datos de la respuesta en formato JSON.
-        '''
-        response_json = response.json() # Diccionario.
-        origin = response_json['origin']
-        print(origin)
-        '''
-        
-        # Otra forma de acceder a los datos de la respuesta en formato JSON es a través de la librería json.
-        response_json = json.loads(response.text)
-        origin = response_json['origin']
-        print(origin)
+        print(response.content)
